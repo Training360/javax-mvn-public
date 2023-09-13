@@ -1,0 +1,11 @@
+FROM eclipse-temurin:17 as builder
+WORKDIR /app
+COPY . .
+RUN ./mvnw package
+RUN ./mvnw dependency:copy-dependencies -DoutputDirectory=target/libs
+
+FROM eclipse-temurin:17
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
+COPY --from=builder /app/target/libs ./libs
+ENTRYPOINT ["java", "-jar", "app.jar"]
