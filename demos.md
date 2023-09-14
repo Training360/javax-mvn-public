@@ -2654,6 +2654,153 @@ public class HelloController {
 }
 ```
 
+## Groovy script futtatása
+
+```xml
+<plugin>
+    <groupId>org.codehaus.gmavenplus</groupId>
+    <artifactId>gmavenplus-plugin</artifactId>
+    <version>3.0.0</version>
+    <executions>
+        <execution>
+            <phase>validate</phase>
+            <goals>
+                <goal>execute</goal>
+            </goals>
+        </execution>
+    </executions>
+    <configuration>
+        <properties>
+            <property>
+                <name>name</name>
+                <value>Trainer</value>
+            </property>
+        </properties>
+        <scripts>
+            <script>file:///${project.basedir}/src/main/groovy/Hello.groovy</script>
+        </scripts>
+    </configuration>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <!-- any version of Groovy \>= 1.5.0 should work here -->
+            <version>4.0.15</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+</plugin>
+```
+
+* `/src/main/groovy/Hello.groovy`
+
+```groovy
+log.info("Hello ${name}!")
+```
+
+## Plugin fejlesztés
+
+* `hello-plugin`
+
+```xml
+<version>1.0.0</version>
+<packaging>maven-plugin</packaging>
+
+<dependencies>
+    <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-plugin-api</artifactId>
+        <version>3.9.4</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.apache.maven.plugin-tools</groupId>
+        <artifactId>maven-plugin-annotations</artifactId>
+        <version>3.9.0</version>
+        <scope>provided</scope>
+    </dependency>
+</dependencies>
+
+<build>
+    <pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.9.0</version>
+                <executions>
+                    <execution>
+                        <id>help-mojo</id>
+                        <goals>
+                            <!-- good practice is to generate help mojo for plugin -->
+                            <goal>helpmojo</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </pluginManagement>
+</build>
+```
+
+```java
+package hello;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+
+@Mojo(name = "hello")
+public class HelloMojo extends AbstractMojo {
+
+    @Parameter( property = "hello.name", defaultValue = "anonymous" )
+    private String name;
+
+
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        getLog().info("Hello %s!".formatted(name));
+    }
+}
+```
+
+```shell
+mvn install
+mvn training:hello-plugin:1.0.0:hello
+mvn training:hello-plugin:1.0.0:hello -Dhello.name=Trainer
+```
+
+* `hello-plugin-client`
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>training</groupId>
+            <artifactId>hello-plugin</artifactId>
+            <version>1.0.0</version>
+            <configuration>
+                <name>Trainer</name>
+            </configuration>
+            <executions>
+                <execution>
+                    <phase>validate</phase>
+                    <goals>
+                        <goal>hello</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+```
+
+```shell
+mvn validate
+```
+
 ## pom.xml bejegyzések sorrendje
 
 ```xml
