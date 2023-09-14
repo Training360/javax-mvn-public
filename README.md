@@ -4,14 +4,18 @@ Maven használata, életciklus, pluginek, függőségek, pom.xml optimalizálás
 
 ## Ismertető
 
-A képzés célja a Maven projekt és build rendszer részletes bemutatása.
+A Maven egy régóta létező, népszerű build eszköz, mellyel szinte már minden Java fejlesztő találkozott. 
+A gyakorlatorientált képzésünk célja, hogy megtanítsa a Maven alapjait, és segítsen megérteni, 
+hogyan használható hatékonyan ez az eszközt a fejlesztési folyamat során.
 
-A képzés komplex gyakorlati feladatokat tartalmaz IntelliJ IDEA fejlesztőeszközzel (egységes igény szerint Eclipse/NetBeans), 
-Maven build eszközzel, Jetty web konténerrel.
+A képzés során gyakorlati példákon keresztül lépésről lépésre fedezzük fel a Maven funkcionalitásait. 
+Megtanuljuk, hogyan hozhatunk létre Maven projektet, hogyan kezelhetjük a függőségeket, 
+és hogyan buildelhetjük le és tesztelhetjük a projektünket. Emellett megismerjük a Maven konfigurációját és 
+testreszabását, hogy maximálisan kihasználhassuk az eszköz nyújtotta lehetőségeket.
 
 ## Szükséges előképzettség
 
-A következő témakörök ismerete elvárt: biztonságos fejlesztőeszköz kezelés, csomagok, osztályok,
+A következő témakörök ismerete elvárt: biztonságos fejlesztőeszköz kezelés, Java csomagok, osztályok,
 interfészek, kivételkezelés.
 
 Előfeltétele a _Java SE alapok (JAVA-BSC)_ és a _Java SE haladó (JAVA-ADV)_ képzések elvégzése, 
@@ -23,20 +27,43 @@ nyelvtudás szükséges. A képzés magyar nyelvű, magyar slide-ok alapján.
 
 ## Tematika
 
-* Maven: alapfogalmak, convention over configuration, repository, deklaratív konfiguráció, függőségek
+* Maven: alapfogalmak, convention over configuration
 * Maven telepítése, környezeti beállítások
-* Archetype, `pom.xml`
-* Projekt felépítése, könyvtárstruktúra, Java webes alkalmazás
-* SNAPSHOT verziók
-* Verziók kezelése
-* Pluginek, életciklusok
+* Repository
+* Projekt felépítése, könyvtárstruktúra
+* Életciklusok, fázisok, pluginek
+* Maven Wrapper
+* Projekt létrehozása archetype segítségével
+* Függőségek
+* Függőség intervallumok
+* Tranzitív függőségek, függőségi fa
+* Scope-ok
+* Property-k használata
+* Lombok és MapStruct használata
 * Tesztesetek futtatása
-* Riportok generálása
-* Weboldal generálása
-* Multimodul projekt, pl. Java EE projekt
+* Párhuzamos futtatás
+* Tesztlefedettség
+* Integrációs tesztek
+* SonarScanner, SonarQube integráció
+* OWASP dependency check
+* Csomagolás
+* Uber JAR
+* Profile, profile activation
+* Install lokális repository-ba
+* Nexus és Artifactory, mint mirror
+* Telepítés Nexus és Artifactory repo-kba
+* Site generálás, riportok
+* CI/CD támogatás, paraméterezhető verziószám
+* Docker konténer futtatása
+* Docker build futtatása
+* Build Docker konténerben
+* Library készítése és felhasználása
+* SNAPSHOT verziók
 * Projekt öröklődés, szülő - gyermek projekt
 * Dependency management
+* Multi-module projekt
+* Java Platform Module System
+* Java webes alkalmazás
+* Spring Boot Mavennel
 * POM optimalizálás
-* Build profiles
 * Maven Plugin implementálása
-* Continuous integration, continuous delivery fogalma, támogatásának áttekintése
