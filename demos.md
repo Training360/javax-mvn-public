@@ -2047,28 +2047,25 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 ## Opentelemetry
 
+> Változott a videóhoz képest!
+
 `otel/docker-compose.yaml`
 
 ```yaml
-version: "3"
 services:
-  # Collector
+  zipkin:
+    image: openzipkin/zipkin:3.4.0
+    ports:
+      - "9411:9411"
   collector:
-    image: otel/opentelemetry-collector:latest
-    command: ["--config=/conf/collector-config.yaml"]
+    image: otel/opentelemetry-collector-contrib:0.105.0
     volumes:
-      - ./collector-config.yaml:/conf/collector-config.yaml
+      - ./collector-config.yaml:/etc/otelcol-contrib/config.yaml
     ports:
       - "4317:4317"
       - "4318:4318"
     depends_on:
       - zipkin
-
-  # Zipkin
-  zipkin:
-    image: openzipkin/zipkin:latest
-    ports:
-      - "9411:9411"
 ```
 
 `otel/collector-config.yaml`
@@ -2078,7 +2075,9 @@ receivers:
   otlp:
     protocols:
       grpc:
+        endpoint: 0.0.0.0:4317
       http:
+        endpoint: 0.0.0.0:4318
 
 exporters:
   zipkin:
@@ -2097,11 +2096,11 @@ docker compose up -d
 
 ```xml
 <extensions>
-    <extension>
-        <groupId>io.opentelemetry.contrib</groupId>
-        <artifactId>opentelemetry-maven-extension</artifactId>
-        <version>1.28.0-alpha</version>
-    </extension>
+  <extension>
+    <groupId>io.opentelemetry.contrib</groupId>
+    <artifactId>opentelemetry-maven-extension</artifactId>
+    <version>1.35.0-alpha</version>
+  </extension>
 </extensions>
 ```
 
