@@ -1734,8 +1734,10 @@ mvn deploy
 
 ## Artifactory repo manager
 
+> Változás a videóhoz képest!
+
 ```shell
-docker run --name artifactory -d -p 8091:8081 -p 8092:8082 docker.bintray.io/jfrog/artifactory-oss:latest
+docker run --name artifactory -d -p 8091:8081 -p 8092:8082 releases-docker.jfrog.io/jfrog/artifactory-oss:7.59.9
 ```
 
 http://localhost:8092/
